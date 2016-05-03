@@ -12,7 +12,18 @@ public class Log  {
 	
 	private Log(){
 	}
-
+	
+	public static void createInstance(){
+		if(EISLog == null){
+			synchronized(Log.class){
+				if(EISLog == null){
+					logger = EisLogger.getLogger("bizLogger");
+					PropertyConfigurator.configure(ConfigManager.getBKEGConfigPath() + "log4j.properties");
+					EISLog = new Log();
+				}
+			}
+		}
+	}
 	
 	public static Log getInstance(){
 		if(EISLog == null){
